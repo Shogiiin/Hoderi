@@ -8,7 +8,7 @@ for(c of commands) {
     commandList += "\n" + c.name + " | " + c.description
 }
 
-const { Client, IntentsBitField, MessageCollector, EmbedBuilder } = require('discord.js')
+const { Client, IntentsBitField, MessageCollector, EmbedBuilder, ActivityType } = require('discord.js')
 
 const client = new Client({
     intents: [
@@ -22,6 +22,10 @@ const client = new Client({
 client.once('ready', (c) => {
     console.log(`\n${c.user.username} went online!`)
     const Guilds = client.guilds.cache.map(guild => guild.id);
+    client.user.setActivity({
+        name: 'Just Chilling',
+        type: ActivityType.Custom,
+    })
 })
 
 client.on('interactionCreate', (interaction) => {
