@@ -1,15 +1,14 @@
 require('dotenv').config()
 
-require('./register-commands')
-const rc = require('./register-commands')
-console.log(commands)
-const commandList = ""
-for(command in commands) {
-    
-    commandList += "\n" + command.name + " | " + command.description
+//require('./register-commands')
+let commands = []
+commands = require('./register-commands')
+let commandList = ""
+for(c of commands) {
+    commandList += "\n" + c.name + " | " + c.description
 }
 
-const { Client, IntentsBitField, MessageCollector } = require('discord.js')
+const { Client, IntentsBitField, MessageCollector, EmbedBuilder } = require('discord.js')
 
 const client = new Client({
     intents: [
@@ -23,18 +22,26 @@ const client = new Client({
 client.once('ready', (c) => {
     console.log(`\n${c.user.username} went online!`)
     const Guilds = client.guilds.cache.map(guild => guild.id);
-    console.log(Guilds);
 })
 
 client.on('interactionCreate', (interaction) => {
     if(!interaction.isChatInputCommand()) return
 
     switch(interaction.commandName) {
-        case 'hey':
-            interaction.reply('Hey!')
-        break;
         case 'help':
-            interaction.reply(`Commands: ${commandList}`)
+            interaction.reply(`Here's a list of all my commands: ${commandList}`)
+        break;
+
+        case 'clear':
+            const numOfMessages = interaction.options.get('msg-number').value
+
+            const clearEmbed = new EmbedBuilder()
+                .setTitle(`Messages Cleared!`)
+                .setDescription(`I have cleared the last ${numOfMessages} messages in this channel.`)
+                .setColor(0xFAFA0F)
+
+
+            interaction.reply({ embeds: [clearEmbed] })
         break;
     }
 })
