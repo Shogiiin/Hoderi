@@ -14,6 +14,10 @@ const helloVariations = [
     'Hola',
     'hola',
     'ola',
+    'ahllo',
+    'ohla',
+    'hyeo',
+    'ehyo',
 ]
 
 module.exports = async (client, message) => {
