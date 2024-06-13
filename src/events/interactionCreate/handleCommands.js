@@ -10,12 +10,11 @@ module.exports = async (client, interaction) => {
 
     try {
         const commandObject = localCommands.find((cmd) => cmd.name === interaction.commandName)
-
         if(!commandObject) return
-        if(commandObject.devOnly) {
+        if(commandObject.devsOnly) {
             if(!devs.includes(interaction.member.id)) {
                 interaction.reply({
-                    content: 'Only devs can run this command. ¯\_(ツ)_/¯',
+                    content: 'Only devs can run this command. 🤷‍♂️',
                     ephemeral: true, //only person that types command can see this 
                 })
                 return

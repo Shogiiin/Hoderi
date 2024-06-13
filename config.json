@@ -1,6 +1,7 @@
 {
-    "testServer": "1206676237460832328",
+    "testServer": "",
     "devs": [
         "300641641591472128"
-    ]
+    ],
+    "embedColor": "#3bbed5"
 }

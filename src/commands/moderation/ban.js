@@ -1,4 +1,5 @@
 const { ApplicationCommandOptionType, PermissionFlagsBits, EmbedBuilder } = require('discord.js')
+const { embedColor } = require('../../../config.json')
 
 module.exports = {
     name: 'ban',
@@ -31,7 +32,7 @@ module.exports = {
 
         const Embed = new EmbedBuilder()
             .setTitle(`Member Banned.`)
-            .setColor(0xFAFA0F)
+            .setColor(embedColor)
             .addFields(
                 {
                     name: `User:`,

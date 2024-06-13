@@ -1,5 +1,6 @@
 const getLocalCommands = require("../../utils/getLocalCommands")
 const { EmbedBuilder } = require('discord.js')
+const { embedColor } = require('../../../config.json')
 
 module.exports = {
     name: 'help',
@@ -14,7 +15,7 @@ module.exports = {
         commandList = ""
         const Embed = new EmbedBuilder()
             .setTitle(`Commands:`)
-            .setColor(0xFAFA0F)
+            .setColor(embedColor)
 
         for(const localCommand of localCommands) {
             let { name, description } = localCommand
