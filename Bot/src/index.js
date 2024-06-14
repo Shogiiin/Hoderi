@@ -1,7 +1,6 @@
 require('dotenv').config()
 const { Client, IntentsBitField, MessageCollector, EmbedBuilder, ActivityType } = require('discord.js')
 const eventhandler = require('./handlers/eventhandler')
-const getLocalCommands = require('./utils/getLocalCommands')
 
 const client = new Client({
     intents: [
