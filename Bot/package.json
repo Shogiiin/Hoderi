@@ -12,6 +12,7 @@
   "dependencies": {
     "commandkit": "^0.1.10",
     "discord.js": "^14.15.2",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "mongodb": "^6.7.0"
   }
 }
