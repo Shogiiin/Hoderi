@@ -12,7 +12,7 @@ module.exports = {
         },
         {
             name: 'difficulty',
-            description: 'A number between 1 & 100 that defines the difficulty of the board.',
+            description: 'A number between 1 & 95 that defines the difficulty of the board.',
             type: ApplicationCommandOptionType.Integer,
         },
     ],
@@ -34,8 +34,8 @@ module.exports = {
 
         // Defining Difficulty
         // difficultyValue is the percentage of boardspaces of bombs
-        let difficultyValue = interaction.options.get('difficulty')?.value ?? 20;
-        if(difficultyValue<1 || difficultyValue > 95) difficultyValue = 10;
+        let difficultyValue = interaction.options.get('difficulty')?.value ?? 40;
+        if(difficultyValue<1 || difficultyValue > 95) difficultyValue = 50;
 
         // Calculate number of bomspaces from the area of the board
         const bombspaceCount = (difficultyValue * (widthOfBoard * heightOfBoard)) / 100;
