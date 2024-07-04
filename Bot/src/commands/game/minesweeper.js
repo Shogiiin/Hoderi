@@ -20,7 +20,7 @@ module.exports = {
         // Defining board dimensions
         const sizeOfBoard = interaction.options.get('size')?.value ?? 10;
         const widthOfBoard = sizeOfBoard;
-        const heightOfBoard = sizeOfBoard+1;
+        const heightOfBoard = sizeOfBoard;
 
         // Checking leghth of params
         if(sizeOfBoard > 10) {
@@ -34,8 +34,8 @@ module.exports = {
 
         // Defining Difficulty
         // difficultyValue is the percentage of boardspaces of bombs
-        let difficultyValue = interaction.options.get('difficulty')?.value ?? 40;
-        if(difficultyValue<1 || difficultyValue > 95) difficultyValue = 50;
+        let difficultyValue = interaction.options.get('difficulty')?.value ?? 25;
+        if(difficultyValue<1 || difficultyValue > 95) difficultyValue = 25;
 
         // Calculate number of bomspaces from the area of the board
         const bombspaceCount = (difficultyValue * (widthOfBoard * heightOfBoard)) / 100;
@@ -112,12 +112,12 @@ module.exports = {
 
         let formattedBoard = [];
         formattedBoard.push("Minesweeper.exe        —    ▭    𝗑");
-        for(let rowNum = 0; rowNum < heightOfBoard-1; rowNum++) {
+        for(let rowNum = 0; rowNum < heightOfBoard; rowNum++) {
             let formattedRow = "||";
             for(let columnNum = 0; columnNum < widthOfBoard; columnNum++) {
                 if(columnNum != 0) {
                     if(board[rowNum][columnNum] == 0) {
-                        if(columnNum-1 < 0) {} else {
+                        if(columnNum < 0) {} else {
                             if(board[rowNum][columnNum-1] != 0) formattedRow += "||";
                         }
                     } else {
