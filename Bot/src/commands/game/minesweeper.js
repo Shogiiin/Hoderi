@@ -1,36 +1,41 @@
 const { ApplicationCommandOptionType, EmbedBuilder } = require('discord.js');
 const { embedColor } = require('../../../config.json');
-const { description, callback } = require('../misc/help');
 
 module.exports = {
     name: 'minesweeper',
     description: 'Generate a Minesweeper-board',
     options: [
         {
-            name: 'width',
-            description: 'The width of the board.',
-            type: ApplicationCommandOptionType.Integer,
-        },
-        {
-            name: 'height',
-            description: 'The height of the board.',
+            name: 'size',
+            description: 'The size of the board. (Largest is 10)',
             type: ApplicationCommandOptionType.Integer,
         },
         {
             name: 'difficulty',
-            description: 'A number between 0 & 100 that defines the difficulty of the board.',
+            description: 'A number between 1 & 100 that defines the difficulty of the board.',
             type: ApplicationCommandOptionType.Integer,
         },
     ],
     callback: (client, interaction) => {
         // Defining board dimensions
-        const widthOfBoard = interaction.options.get('width')?.value ?? 5;
-        const heightOfBoard = interaction.options.get('height')?.value ?? 5;
+        const sizeOfBoard = interaction.options.get('size')?.value ?? 10;
+        const widthOfBoard = sizeOfBoard;
+        const heightOfBoard = sizeOfBoard+1;
+
+        // Checking leghth of params
+        if(sizeOfBoard > 10) {
+            const embed = new EmbedBuilder()
+                .setTitle("Sorry you made the board to big.   🫤")
+                .setDescription('The maximum size a Board can have is 10.')
+                .setColor(embedColor);
+            interaction.reply({ embeds: [embed], ephemeral: true });
+            return;
+        };
 
         // Defining Difficulty
         // difficultyValue is the percentage of boardspaces of bombs
-        let difficultyValue = interaction.options.get('height')?.value ?? 40;
-        if(difficultyValue<0 || difficultyValue > 100) difficultyValue = 40;
+        let difficultyValue = interaction.options.get('difficulty')?.value ?? 20;
+        if(difficultyValue<1 || difficultyValue > 95) difficultyValue = 10;
 
         // Calculate number of bomspaces from the area of the board
         const bombspaceCount = (difficultyValue * (widthOfBoard * heightOfBoard)) / 100;
@@ -92,7 +97,76 @@ module.exports = {
             }
         }
 
+        const icons = {
+            bomb: "🧨",
+            zero: "0️⃣",
+            one: "1️⃣",
+            two: "2️⃣",
+            three: "3️⃣",
+            four: "4️⃣",
+            five: "5️⃣",
+            six: "6️⃣",
+            seven: "7️⃣",
+            eight: "8️⃣",
+        }
+
+        let formattedBoard = [];
+        formattedBoard.push("Minesweeper.exe        —    ▭    𝗑");
+        for(let rowNum = 0; rowNum < heightOfBoard-1; rowNum++) {
+            let formattedRow = "||";
+            for(let columnNum = 0; columnNum < widthOfBoard; columnNum++) {
+                if(columnNum != 0) {
+                    if(board[rowNum][columnNum] == 0) {
+                        if(columnNum-1 < 0) {} else {
+                            if(board[rowNum][columnNum-1] != 0) formattedRow += "||";
+                        }
+                    } else {
+                        formattedRow += "||";
+                    }
+                }
+
+                switch(board[rowNum][columnNum]) {
+                    case -1:
+                        formattedRow += `${icons.bomb}||`;
+                        continue;
+                    case 0:
+                        formattedRow += `${icons.zero}`;
+                        break;
+                    case 1:
+                        formattedRow += `${icons.one}||`;
+                        continue;
+                    case 2:
+                        formattedRow += `${icons.two}||`;
+                        continue;
+                    case 3:
+                        formattedRow += `${icons.three}||`;
+                        continue;
+                    case 4:
+                        formattedRow += `${icons.four}||`;
+                        continue;
+                    case 5:
+                        formattedRow += `${icons.five}||`;
+                        continue;
+                    case 6:
+                        formattedRow += `${icons.six}||`;
+                        continue;
+                    case 7:
+                        formattedRow += `${icons.seven}||`;
+                        continue;
+                    case 8:
+                        formattedRow += `${icons.eight}||`;
+                        continue;
+                }
+
+                if(columnNum+1 > widthOfBoard-1) {
+                    formattedRow += "||";
+                    continue;
+                };
+                if(board[rowNum][columnNum+1] != 0) formattedRow += "||";
+            }
+            formattedBoard += `\n${formattedRow}`;
+        }
         
-        // interaction.reply(`Width: ${widthOfBoard}, Height: ${heightOfBoard}, Board: ${board}`);
+        interaction.reply(`${formattedBoard}`);
     },
 }
